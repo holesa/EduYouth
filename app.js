@@ -1,16 +1,17 @@
-const express       = require('express');
-const app           = express();
-const path          = require('path');
-const ejs           = require('ejs');
-const mongoose      = require('mongoose');
+const express               = require('express');
+const app                   = express();
+const path                  = require('path');
+const ejs                   = require('ejs');
+const mongoose              = require('mongoose');
 mongoose.connect('mongodb://localhost/user',{useNewUrlParser:true});
-const User          = require('./models/user');
-const bodyParser    = require('body-parser');
-const session       = require('express-session');
-const passport      = require('passport');
-const LocalStrategy = require('passport-local');
-const bcrypt        = require('bcryptjs');
-const flash         = require('connect-flash');
+const User                  = require('./models/user');
+const bodyParser            = require('body-parser');
+const session               = require('express-session');
+const passport              = require('passport');
+const LocalStrategy         = require('passport-local');
+const bcrypt                = require('bcryptjs');
+const flash                 = require('connect-flash');
+const LinkedInStrategy      = require('passport-linkedin');
 
 
 
@@ -67,6 +68,22 @@ User.findOne({username:username},(err, user)=>{
     })
 }))
 
+/*
+// Config Linkedin strategy  
+passport.use(new LinkedInStrategy({
+    consumerKey: LINKEDIN_API_KEY,
+    consumerSecret: LINKEDIN_SECRET_KEY,
+    callbackURL: "http://127.0.0.1:3000/auth/linkedin/callback"
+  },
+  function(token, tokenSecret, profile, done) {
+    User.findOrCreate({ linkedinId: profile.id }, function (err, user) {
+      return done(err, user);
+    });
+  }
+));
+*/
+
+
 // Middlewere to verify logged users
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
@@ -90,7 +107,7 @@ app.get('/',(req,res)=>{
 })
 
 
-// Registracia
+// Registracia LOCAL
 app.route('/registracia')
     .get((req,res)=>{
     res.render('registracia')
@@ -113,7 +130,7 @@ app.route('/registracia')
 
             */
            console.log(err)
-            throw err;
+            res.redirect('/registracia');
             }
           else{  
      //       passport.authenticate('local',(req,res)=>{
@@ -131,6 +148,7 @@ app.route('/registracia')
 
 
 
+
     
 // Prihlasenie
 app.route('/prihlasenie')
@@ -138,11 +156,12 @@ app.route('/prihlasenie')
      res.render('prihlasenie')
   })
 
- .post(passport.authenticate('local',{successRedirect: '/profil', failureRedirect:'/prihlasenie'}),(req,res)=>{
+ .post(passport.authenticate('local',{failureRedirect:'/prihlasenie'}),(req,res)=>{
+     res.redirect('/' + req.body.username+'/uprava')
     });
 
 // Profil
-app.get('/profil',isLoggedIn,(req,res)=>{
+app.get('/:profil/uprava',isLoggedIn,(req,res)=>{
     res.render('profil')
 })
 
