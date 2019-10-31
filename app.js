@@ -11,7 +11,7 @@ const passport              = require('passport');
 const LocalStrategy         = require('passport-local');
 const bcrypt                = require('bcryptjs');
 const flash                 = require('connect-flash');
-const LinkedInStrategy      = require('passport-linkedin');
+const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 
 
 
@@ -68,19 +68,41 @@ User.findOne({username:username},(err, user)=>{
     })
 }))
 
+
 /*
 // Config Linkedin strategy  
 passport.use(new LinkedInStrategy({
-    consumerKey: LINKEDIN_API_KEY,
-    consumerSecret: LINKEDIN_SECRET_KEY,
-    callbackURL: "http://127.0.0.1:3000/auth/linkedin/callback"
-  },
-  function(token, tokenSecret, profile, done) {
-    User.findOrCreate({ linkedinId: profile.id }, function (err, user) {
-      return done(err, user);
-    });
-  }
-));
+  clientID: '',
+  clientSecret: '',
+  callbackURL: "http://127.0.0.1:3000/auth/linkedin/callback",
+  profileFields: [
+    "formatted-name",
+    "headline",
+    "id",
+    "public-profile-url",
+    "email-address",
+    "location",
+],
+  scope: ['r_emailaddress', 'r_basicprofile'],
+  state: true
+}, function(accessToken, refreshToken, profile, done) {
+  // asynchronous verification, for effect...
+  process.nextTick(function () {
+    console.log(profile)
+    let savedProfil =new User({
+      linkedin:[{
+        id:profile.id
+      }]
+    }).save().then((newUser)=>{
+      console.log(newUser)
+    })
+    // To keep the example simple, the user's LinkedIn profile is returned to
+    // represent the logged-in user. In a typical application, you would want
+    // to associate the LinkedIn account with a user record in your database,
+    // and return that user instead.
+    return done(null, savedProfil);
+  });
+}));
 */
 
 
@@ -161,9 +183,43 @@ app.route('/prihlasenie')
     });
 
 // Profil
-app.get('/:profil/uprava',isLoggedIn,(req,res)=>{
-    res.render('profil')
+
+// Load profile
+app.route('/:profil/uprava')
+   .get(isLoggedIn,(req,res)=>{
+   let url = req.params.profil
+   
+   User.findOne({username:req.params.profil},(err,data)=>{
+    if(err) throw err;
+    else{   
+    console.log(data)  
+    res.render('profil',{url:url,data:data})  
+  }
+   })
+ // console.log(req.params)   
 })
+
+// Edit profile
+   .post((req,res)=>{
+    User.findOneAndUpdate({username:req.params.profil},{  
+    fullname:req.body.fullname,
+    foto:req.body.foto,
+    sex:req.body.sex,
+    birth:req.body.birth,
+    adress:req.body.adress,
+    occupation:req.body.occupation,
+    skills:req.body.skills,
+    phone:req.body.phone,
+    contactEmail:req.body.contactEmail,
+    languages:req.body.languages,
+    note:req.body.note,
+    },(err=>{
+     if(err) throw err;
+     else{
+       res.redirect('/'+req.params.profil+'/uprava')
+     }
+   }))
+  })
 
 
 // Odhlasenie
@@ -172,6 +228,18 @@ app.get('/odhlasenie',(req,res)=>{
     res.redirect('/')
 })
 
+// Linkedin prihlasenie
+app.get('/auth/linkedin',
+  passport.authenticate('linkedin'),
+  function(req, res){
+    // The request will be redirected to LinkedIn for authentication, so this
+    // function will not be called.
+  });
+
+app.get('/auth/linkedin/callback', passport.authenticate('linkedin', {
+  successRedirect: '/profil',
+  failureRedirect: '/prihlasenie'
+}));
 
 
 // Server listen

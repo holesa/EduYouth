@@ -3,7 +3,6 @@ Autentikacia
 Fazy:
 1. Zasifrovanie hesla z inputu
 2. Ulozenie zasifrovaneho hesla a mena do databazy 
-3. 
 
 Realne fazy:
 ----
@@ -27,3 +26,7 @@ Potrebujem este pridat do univApp
 - express flesh
 -
 
+Databaza
+----------------------
+Dilema
+- oauth dat spolou s lokalnou registraciou, alebo nie

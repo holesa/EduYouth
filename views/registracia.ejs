@@ -8,11 +8,14 @@
     <form method='POST' action='/registracia' >
        <input type='email' name='email' placeholder='Email'>
        <input type='text' name='username' placeholder='Užívatelské meno'>
+       <p>Prosim urcite co ste:</p>
+       <input type='radio' name='type' value='expert'>Expert<br>
+       <input type='radio' name='type' value='profesor'>Profesor<br>
        <input type='password' name='password' placeholder='Heslo'>
        <button type='submit'>Registrovať sa</button>
     </form>
     <h2>Registracia cez linkedin</h2>
-    <a href='/registracia'>Registrovať tu</a>
+    <a href='/auth/linkedin'>Registrovať tu</a>
     <br>
     <br>
     <br>
