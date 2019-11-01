@@ -11,12 +11,12 @@ const passport              = require('passport');
 const LocalStrategy         = require('passport-local');
 const bcrypt                = require('bcryptjs');
 const flash                 = require('connect-flash');
-const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
+const LinkedInStrategy      = require('passport-linkedin-oauth2').Strategy;
 
 
 
 app.set('view engine','ejs')
-
+app.use(express.static(__dirname + '/public/'));
 app.use(bodyParser.urlencoded({
     exdended:false
 }))
@@ -115,13 +115,14 @@ function isLoggedIn(req, res, next){
     }
 }
 
+/*
 // Global variables
 app.use(function(req, res, next){
 res.locals.success = req.flash('success');
 res.locals.error   = req.flash('error');
 next()
 })
-
+*/
 
 // Homepage
 app.get('/',(req,res)=>{
@@ -156,9 +157,9 @@ app.route('/registracia')
             }
           else{  
      //       passport.authenticate('local',(req,res)=>{
-                req.flash("success","Váš účet bol práve vytvorený.")
-                res.redirect('/prihlasenie')
-         //   })
+              res.redirect('/'+req.body.username + '/dokoncenie')
+      
+                //   })
                /* 
                 
                 res.redirect("/profil")
@@ -170,6 +171,46 @@ app.route('/registracia')
 
 
 
+// Registracia expert
+app.route('/:username/dokoncenie')
+    .get((req, res)=>{
+      let url = req.params.username
+      res.render('multistep_registration',{url:url})
+    })
+
+    .post((req,res)=>{
+      /*
+      User.findOneAndUpdate({username:req.params.dokoncenie},{  
+        fullname:req.body.fullname,
+        foto:req.body.foto,
+        sex:req.body.sex,
+        birth:req.body.birth,
+        adress:req.body.adress,
+        occupation:req.body.occupation,
+        skills:req.body.skills,
+        phone:req.body.phone,
+        contactEmail:req.body.contactEmail,
+        languages:req.body.languages,
+        note:req.body.note,
+        },(err=>{
+         if(err) throw err;
+         else{
+          if(req.body.authentiaction === 'local'){
+        // REDIRECT
+        console.log(req.body)
+           res.send('POTVRD EMAIL') 
+           }
+         else{
+          res.redirect('/'+req.body.username + '/profil')
+        // REDIRECT
+          }
+    }
+    })
+  ) 
+  */
+    console.log(req.body)
+    res.redirect('/')
+})
 
     
 // Prihlasenie
@@ -178,7 +219,7 @@ app.route('/prihlasenie')
      res.render('prihlasenie')
   })
 
- .post(passport.authenticate('local',{failureRedirect:'/prihlasenie'}),(req,res)=>{
+  .post(passport.authenticate('local',{failureRedirect:'/prihlasenie'}),(req,res)=>{
      res.redirect('/' + req.body.username+'/uprava')
     });
 
@@ -222,12 +263,24 @@ app.route('/:profil/uprava')
   })
 
 
+
+
+ // Hladaj expertov
+app.route('/experti')
+    .get((req,res)=>{
+      res.render('experti')
+    })
+
+
+
 // Odhlasenie
 app.get('/odhlasenie',(req,res)=>{
     req.logout();
     res.redirect('/')
 })
 
+
+/*
 // Linkedin prihlasenie
 app.get('/auth/linkedin',
   passport.authenticate('linkedin'),
@@ -237,11 +290,11 @@ app.get('/auth/linkedin',
   });
 
 app.get('/auth/linkedin/callback', passport.authenticate('linkedin', {
-  successRedirect: '/profil',
+  successRedirect: '/dokoncenie?username=' + req.body.username',
   failureRedirect: '/prihlasenie'
 }));
 
-
+*/
 // Server listen
 app.listen(3000,(err,data)=>{
     if (err){
