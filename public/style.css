@@ -47,3 +47,15 @@
     background-color: #4CAF50;
   }
   
+
+  .obsah-menu{
+    display: none;
+  }
+
+  .show{
+    display: block;
+}  
+
+.expert-div{
+  border: 1px black solid;
+}

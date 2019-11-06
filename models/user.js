@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
     type:{type:String},
-    subject:{type:String},
-    lecturing:{type:String},
-    city:{type:String},
-    username:{type:String,unique:true},
+    isVerified:{type:Boolean, default:false},
+    subject:{type:Array},
+    lecturing:{type:Array},
+    city:{type:Array},
     password:{type:String},
     email:{type:String, unique:true},
     fullname:{type:String},

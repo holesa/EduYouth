@@ -4,30 +4,35 @@
     <title>DOkonci registraciu</title>
     <link rel='stylesheet' type='text/css' href='/./style.css'>
 </head>
-<body>
+<body id="registraciaFile">
 
-    
-
-<form id="regForm" method='POST' action="/<%=url%>/dokoncenie">
+ 
+<form id="regForm" method='POST' action="/dokoncenie">
 
 <div class="tab">Prosim urcite co ste:
     <p><input type='radio' class='radio' name='type' value='expert'>Expert</p>
     <p><input type='radio' name='type' class='radio' value='profesor'>Profesor</p>
 </div>
  
-<div class="tab">Ak chcete byt expert:
-  <p><input type='checkbox' name='predmety' value='matematika' placeholder="Predmety ktore chcem ucit" oninput="this.className = ''">Matematika</p>
-  <p><input type='checkbox' name='predmety' value='dejepis' placeholder="Typ vyucby ktory si volim" oninput="this.className = ''">Dejepis</p>
+<div class="tab">Vyber si predmety:
+  <p><input type='checkbox' name='subject' value='matematika' placeholder="Predmety ktore chcem ucit" oninput="this.className = ''">Matematika</p>
+  <p><input type='checkbox' name='subject' value='doprava' placeholder="Predmety ktore chcem ucit" oninput="this.className = ''">Doprava</p>
+  <p>Vyber si typ vyucby:</p>
+  <p><input type='checkbox' name='lecturing' value='Prednášky' placeholder="Typ vyucby ktory si volim" oninput="this.className = ''">Prednasky</p>
+  <p><input type='checkbox' name='lecturing' value='hodiny' placeholder="Typ vyucby ktory si volim" oninput="this.className = ''">Hodiny</p>
+  <p>Vyber si mesto:</p>
+  <p><input type='checkbox' name='city' value='martin' placeholder="Mesto kde chcem ucit" oninput="this.className = ''">Martin</p>
+  <p><input type='checkbox' name='city' value='trnava' placeholder="Mesto kde chcem ucit" oninput="this.className = ''">Trnava</p>
 </div>
-<%#{%>
+
 
 <div class="tab">Vypln si profil:
-  <p><input placeholder="Povalenie" name="povolanie" oninput="this.className = ''"></p>
-  <p><input placeholder="Mesto" name="mesto" oninput="this.className = ''"></p>
+  <p><input placeholder="Povalenie" name="occupation" oninput="this.className = ''"></p>
+  <p><input placeholder="Cele meno" name="fullname" oninput="this.className = ''"></p>
 </div>
 
     
-<div style="overflow:auto;">
+<div id="buttons" style="overflow:auto;">
   <div style="float:right;">
     <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
     <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
@@ -35,11 +40,12 @@
 </div>
 
 <!-- Circles which indicates the steps of the form: -->
-<div style="text-align:center;margin-top:40px;">
+<div id='circles' style="text-align:center;margin-top:40px;">
   <span class="step"></span>
   <span class="step"></span>
   <span class="step"></span>
 </div>
+
 
 </form>
 <script src='/./script.js'></script>

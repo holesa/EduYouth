@@ -2,13 +2,71 @@
 <html>
 <head>
     <title>Najdi experta</title>
+    <link rel='stylesheet' type='text/css' href='/./style.css'>
 </head>
-<body>
-<!--
-Vyhladavacie kriteria:
-- Mesto kde je ochotny ucit
+<body id="expertiFile">
+    
+<!--Vyhladavaci panel
+
+- Mesto kde je ochotny ucit // \NAJDE SA AUTOMATICKY podla mesta profesora
+// Alternativa by bolo dat zoznam miest s uz oredskrtnutou moznostou mesta profesora
 - Typ vyukovej aktivity (4typy)
-- Oblasti v ktorych chce ucit
--->    
+- Oblasti v ktorych chce ucit 
+--> 
+
+<!-- 
+
+ 
+
+<div>
+        <label><input></input></label>  
+      </div> 
+
+
+ -->
+ <h2><a href="/">Homepage</a></h2>
+ <h2><a href="/profil">Profil</a></h2>
+ <div id="filter_pre_expertov">
+<form method="GET" action="/experti"> 
+ <h3>Vyhladavacie kriteria:</h3>
+
+
+ <button type="button" id="vyucba-tlacidlo">Typy vyukovej aktivity</button>
+  <div id="vyucba-obsah" class="obsah-menu">
+    <%vyucbaList.forEach(polozka=>{%>
+      <label><input type="checkbox" name="vyucba" value="<%=polozka%>"><%=polozka%></label>
+    <%})%>
+  </div>
+
+ <button type="button" id="predmety-tlacidlo">Predmety vyucby</button>
+    <div id="predmety-obsah" class="obsah-menu">
+        <%predmetyList.forEach(polozka=>{%>
+          <label><input type="checkbox" name="predmety" value="<%=polozka%>"><%=polozka%></label>
+          <%})%>
+      </div>   
+  
+    </div>
+<br>
+<button type="submit">Vyhladaj</button>
+</form>
+<div id="zoznam_expertov">  
+    <%usery.forEach(user=>{%>
+    <div class="expert-div">
+        <div class="user">
+          <label><%=user.email%></label>
+          <br>
+          <label><%=user.fullname%></label>
+          <a href="experti/<%=user.id%>" target="__blank">Pozriet experta</a>
+        </div>
+    </div>  
+    <%})%>
+</div>
+      
+  
+
+<!--Zoznam expertov podla kriterii-->
+
+
+<script type="text/javascript" src='/./script.js'></script>
 </body>
 </html>

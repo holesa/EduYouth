@@ -1,3 +1,49 @@
+Treba spravit najblizsie
+---
+- nastavit seed data na testovanie
+
+
+
+Co treba spravit na koniec:
+---
+- poziadanie zabudnuteho hesla
+- mobilna verzia (mysliet pri frontende)
+- header + footer
+
+
+
+V1+
+----
+- filtrovanie bez refreshu
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Autentikacia
 ------------------
 Fazy:
@@ -26,7 +72,7 @@ Potrebujem este pridat do univApp
 - express flesh
 -
 
-Databaza
+Databaza     
 ----------------------
 Dilema
 - oauth dat spolou s lokalnou registraciou, alebo nie

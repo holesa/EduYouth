@@ -1,4 +1,34 @@
+// Experti JS
+if(document.getElementById("expertiFile")){
+const predmety = document.getElementById("predmety-tlacidlo")
+const list1    = document.getElementById("predmety-obsah")
+const list2    = document.getElementById("vyucba-obsah")
+const vyucba   = document.getElementById("vyucba-tlacidlo")
 
+predmety.addEventListener("click",(event)=>{
+  list1.classList.toggle("show")
+})
+
+vyucba.addEventListener("click",(event)=>{
+  list2.classList.toggle("show")
+})
+
+window.onclick = function(event) {
+  if (!["BUTTON","INPUT","LABEL"].includes(event.target.tagName)) {
+    var dropdowns = document.getElementsByClassName("obsah-menu");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+}
+
+// Registracia JS
+if(document.getElementById("registraciaFile")){
 var currentTab = 0; // Current tab is set to be the first tab (0)
 showTab(currentTab); // Display the current tab
 
@@ -24,23 +54,31 @@ function showTab(n) {
 function nextPrev(n) {
     var a = document.querySelector('input[name="type"]:checked').value
     console.log(a)
+    
   // This function will figure out which tab to display
   var x = document.getElementsByClassName("tab");
   // Exit the function if any field in the current tab is invalid:
   if (n == 1 && !validateForm()) return false;
   // Hide the current tab:
   x[currentTab].style.display = "none";
-  // Increase or decrease the current tab by 1:
-  if(a==='profesor'){
-  currentTab = currentTab + n +1;
+  // Ak je profesor a chce ísť ďalej, choď na poslednú kartu
+  if(a==='profesor' && n>0){ 
+  currentTab = currentTab + 2;
   }
-  else{
+  // Ak je profesor a chce ísť späť, vráť sa na prvú kartu
+  if(a==='profesor' && n<0){ 
+    currentTab = currentTab -2;
+    }
+  // Ak je expert, posúvaj sa vždy o 1 kartu
+  if(a==='expert'){
   currentTab = currentTab + n;   
   }
   // if you have reached the end of the form... :
   if (currentTab >= x.length) {
     //...the form gets submitted:
-    document.getElementById("regForm").submit();
+    document.getElementById("circles").style["display"] = "none";
+    document.getElementById("buttons").style["display"] = "none"; 
+    document.getElementById("regForm").submit()
     return false;
   }
   // Otherwise, display the correct tab:
@@ -78,3 +116,11 @@ function fixStepIndicator(n) {
   //... and adds the "active" class to the current step:
   x[n].className += " active";
 }
+}
+
+
+
+
+
+
+
