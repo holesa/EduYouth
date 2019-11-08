@@ -12,7 +12,6 @@ predmety.addEventListener("click",(event)=>{
 vyucba.addEventListener("click",(event)=>{
   list2.classList.toggle("show")
 })
-
 window.onclick = function(event) {
   if (!["BUTTON","INPUT","LABEL"].includes(event.target.tagName)) {
     var dropdowns = document.getElementsByClassName("obsah-menu");
@@ -25,7 +24,30 @@ window.onclick = function(event) {
     }
   }
 }
+
+function rememberCheckboxes(){
+  // Ulož checkbox hodnoty do LocalStorage
+  let checkedValues = JSON.parse(localStorage.getItem("checkedValues")) || {}  
+  let checkboxes = document.querySelectorAll("input[class=checkbox]")
+    checkboxes.forEach(data=>{
+      data.addEventListener("change",(item)=>{
+        checkedValues[data.id] = data.checked;
+        localStorage.setItem("checkedValues",JSON.stringify(checkedValues))  
+      })
+    })
+    
+   // Načítaj z LocalStorage zaškrtnuté checkboxy
+    for(var j in checkedValues){
+      if(checkedValues[j] === true){
+      document.getElementById(j).setAttribute("checked",checkedValues[j])
+      }
+    }
+   
+  }
+  
+ rememberCheckboxes()
 }
+
 
 // Registracia JS
 if(document.getElementById("registraciaFile")){

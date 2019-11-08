@@ -1,32 +1,34 @@
-const express               = require('express');
+const express               = require("express");
 const app                   = express();
-const path                  = require('path');
-const ejs                   = require('ejs');
-const mongoose              = require('mongoose');
-mongoose.connect('mongodb://localhost/user',{useNewUrlParser:true});
-const User                  = require('./models/user');
-const Token                 = require('./models/token');
-const Interne               = require('./models/interne');
-const bodyParser            = require('body-parser');
-const session               = require('express-session');
-const passport              = require('passport');
-const LocalStrategy         = require('passport-local');
-const bcrypt                = require('bcryptjs');
-const flash                 = require('connect-flash');
-const nodemailer            = require('nodemailer')
-const LinkedInStrategy      = require('passport-linkedin-oauth2').Strategy;
+const path                  = require("path");
+const ejs                   = require("ejs");
+const mongoose              = require("mongoose");
+mongoose.connect("mongodb://localhost/user",{useNewUrlParser:true});
+const User                  = require("./models/user");
+const Token                 = require("./models/token");
+const Interne               = require("./models/interne");
+const seedDb                = require("./models/seed")
+const bodyParser            = require("body-parser");
+const session               = require("express-session");
+const passport              = require("passport");
+const LocalStrategy         = require("passport-local");
+const bcrypt                = require("bcryptjs");
+const flash                 = require("connect-flash");
+const nodemailer            = require("nodemailer")
+const LinkedInStrategy      = require("passport-linkedin-oauth2").Strategy;
 
 
 
-app.set('view engine','ejs')
-app.use(express.static(__dirname + '/public/'));
+seedDb()
+app.set("view engine","ejs")
+app.use(express.static(__dirname + "/public/"));
 app.use(bodyParser.urlencoded({
     exdended:false
 }))
 
 // Express session
 app.use(session({
-    secret:'eifeif6ew5f46ewf9969fjiwe6565qe6fewfwefjewjfiewjfewfkeif56f54e6f5sdfm',
+    secret:"eifeif6ew5f46ewf9969fjiwe6565qe6fewfwefjewjfiewjfewfkeif56f54e6f5sdfm",
     resave:false,
     saveUninitialized:false    
 }))
@@ -54,8 +56,8 @@ passport.deserializeUser(function(id, done) {
   });
 
 // Config Local strategy  
-passport.use(new LocalStrategy({usernameField: 'email', 
-passwordField: 'password'},(email,password,done)=>{
+passport.use(new LocalStrategy({usernameField: "email", 
+passwordField: "password"},(email,password,done)=>{
 User.findOne({email:email},(err, user)=>{
         if (err) {return done(err);}
         if (!user) {return done(null, false);}
@@ -74,8 +76,8 @@ User.findOne({email:email},(err, user)=>{
 /*
 // Config Linkedin strategy  
 passport.use(new LinkedInStrategy({
-  clientID: '',
-  clientSecret: '',
+  clientID: "",
+  clientSecret: "",
   callbackURL: "http://127.0.0.1:3000/auth/linkedin/callback",
   profileFields: [
     "formatted-name",
@@ -85,7 +87,7 @@ passport.use(new LinkedInStrategy({
     "email-address",
     "location",
 ],
-  scope: ['r_emailaddress', 'r_basicprofile'],
+  scope: ["r_emailaddress", "r_basicprofile"],
   state: true
 }, function(accessToken, refreshToken, profile, done) {
   // asynchronous verification, for effect...
@@ -99,7 +101,7 @@ passport.use(new LinkedInStrategy({
     }).save().then((newUser)=>{
       console.log(newUser)
     })
-    // To keep the example simple, the user's LinkedIn profile is returned to
+    // To keep the example simple, the user"s LinkedIn profile is returned to
     // represent the logged-in user. In a typical application, you would want
     // to associate the LinkedIn account with a user record in your database,
     // and return that user instead.
@@ -114,29 +116,29 @@ function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
          next();
     } else{
-      res.redirect('/prihlasenie')
+      res.redirect("/prihlasenie")
     }
 }
 
 // Global variables
 app.use(function(req, res, next){
-//res.locals.success = req.flash('success');
-//res.locals.error   = req.flash('error');
+//res.locals.success = req.flash("success");
+//res.locals.error   = req.flash("error");
 res.locals.currentUser = req.user 
 next()
 })
 
 
 // Homepage
-app.get('/',(req,res)=>{
-    res.render('index')
+app.get("/",(req,res)=>{
+    res.render("index")
 })
 
 
 // Registracia LOCAL
-app.route('/registracia')
+app.route("/registracia")
     .get((req,res)=>{
-    res.render('registracia')
+    res.render("registracia")
 })
     .post((req,res)=>{
     let hash = bcrypt.hashSync(req.body.password, 14)
@@ -145,24 +147,24 @@ app.route('/registracia')
     newUser.save((err,user)=>{
         if(err){
             /*
-            let error =  'Vyskytla sa chyba, skuste to znovu.'
-           console.log('ERROR 1')
+            let error =  "Vyskytla sa chyba, skuste to znovu."
+           console.log("ERROR 1")
             if(err.code === 11000){
-             error = 'Tato emailova edresa sa uz pouziva.'
-             console.log('ERROR 2')
+             error = "Tato emailova edresa sa uz pouziva."
+             console.log("ERROR 2")
          }
-         console.log('ERROR 3')
-            return res.redirect('/registracia');
+         console.log("ERROR 3")
+            return res.redirect("/registracia");
 
             */
            console.log(err)
-            res.redirect('/registracia');
+            res.redirect("/registracia");
             }
           else{  
             req.login(user, function(error) {
               if (error) throw error; 
               else{
-              res.redirect('/dokoncenie');
+              res.redirect("/dokoncenie");
               }
             });
         } 
@@ -173,9 +175,9 @@ app.route('/registracia')
 
 // Registracia expert
 
-app.route('/dokoncenie')
+app.route("/dokoncenie")
     .get(isLoggedIn,(req, res)=>{
-      res.render('multistep_registration')
+      res.render("multistep_registration")
     })
 
     .post(isLoggedIn,(req,res)=>{
@@ -208,7 +210,7 @@ app.route('/dokoncenie')
             // Posli email
              // create reusable transporter object using the default SMTP transport
                   let transporter = nodemailer.createTransport({
-                    host: 'smtp.gmail.com',
+                    host: "smtp.gmail.com",
                     port: 587,
                     secure: false, // true for 465, false for other ports
                     auth: {
@@ -222,25 +224,25 @@ app.route('/dokoncenie')
 
                 // send mail with defined transport object
                 transporter.sendMail({
-                    from: '"FeedTheYouth" <feedtheyouth20@gmail.com>', // sender address
+                    from: "'FeedTheYouth' <feedtheyouth20@gmail.com>", // sender address
                     to: req.user.email, // list of receivers
-                    subject: 'Hello from TheFeedTheYouth', // Subject line
-                    text: 'Hello again', // plain text body
+                    subject: "Hello from TheFeedTheYouth", // Subject line
+                    text: "Hello again", // plain text body
                     html: content // html body
                 });
 
-             //   console.log('Message sent: %s', info.messageId);
+             //   console.log("Message sent: %s", info.messageId);
                 // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
                 // Preview only available when sending through an Ethereal account
-            //    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+            //    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
                 // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
-                res.render('potvrdenie',{msg:"Potvrdzujúci email bol poslaný na Vašu emailovú adresu"})
+                res.render("potvrdenie",{msg:"Potvrdzujúci email bol poslaný na Vašu emailovú adresu"})
               }
 
          else{
         // Ak sa registroval cez oauth, posli ho do profilu   
-          res.redirect('/profil')
+          res.redirect("/profil")
           }
     }
     })
@@ -274,30 +276,30 @@ app.route("/overenie")
     })
     
 // Prihlasenie
-app.route('/prihlasenie')
+app.route("/prihlasenie")
     .get((req,res)=>{
-     res.render('prihlasenie')
+     res.render("prihlasenie")
   })
 
-  .post(passport.authenticate('local',{failureRedirect:'/prihlasenie'}),(req,res)=>{
-     res.redirect('/profil')
+  .post(passport.authenticate("local",{failureRedirect:"/prihlasenie"}),(req,res)=>{
+     res.redirect("/profil")
     });
 
 // Profil
 
 // Load profile
-app.route('/profil')
+app.route("/profil")
    .get(isLoggedIn,(req,res)=>{
-    console.log('THIS ' + req.user)
+    console.log("THIS " + req.user)
    // Overenie verifikacie uctu
    if(req.user.isVerified === false){
-     res.redirect('registracia')
+     res.redirect("registracia")
    } 
     
    User.findOne({password:req.user.password},(err,data)=>{
     if(err) throw err;
     else{   
-    res.render('profil',{data:data})  
+    res.render("profil",{data:data})  
   }
    })
 })
@@ -307,57 +309,63 @@ app.route('/profil')
     User.findOneAndUpdate({password:req.user.password},req.body,(err=>{
      if(err) throw err;
      else{
-       res.redirect('/profil')
+       res.redirect("/profil")
      }
    }))
   })
 
 
  // Hladaj expertov
-app.route('/experti')
+app.route("/experti")
     .get((req,res)=>{
       const predmetyList = ["architektúra a urbanizmus","bezpečnostné vedy","biológia","biotechnológie","doprava","drevárstvo","ekologické a environmentálne vedy","ekonómia a manažment","elektrotechnika","farmácia","filológia","filozofia","fyzika","geodézia a kartografia","historické vedy","chémia","chemické inžinierstvo a technológie","informatika","kybernetika","lesníctvo","logopédia a liečebná pedagogika","matematika","mediálne a komunikačné štúdiá","obrana a vojenstvo","ošetrovateľstvo","politické vedy","poľnohospodárstvo a krajinárstvo","potravinárstvo","pôrodná asistencia","právo","priestorové plánovanie","psychológia","sociálna práca","sociológia a sociálna antropológia","stavebníctvo","strojárstvo","teológia","učiteľstvo a pedagogické vedy","umenie","vedy o športe","vedy o umení a kultúre","vedy o Zemi","verejné zdravotníctvo","veterinárske lekárstvo","všeobecné lekárstvo","zdravotnícke vedy","získavanie a spracovanie zemských zdrojov","zubné lekárstvo"];
       const vyucbaList = ["Prednášky","Hodiny","Poradca na sylaby", "Výučba pri kruhu"];
       const filter = {
         type:"expert",
         subject:{
-          $in:req.query.predmety
+          $in:req.query.predmety===undefined ? predmetyList : req.query.predmety
         },
         lecturing:{
-          $in:req.query.vyucba
+          $in:req.query.vyucba===undefined ? vyucbaList : req.query.vyucba
         }
     }
 
       User.find(filter,(err,usery)=>{
         if(err) throw err;
         else{
-          console.log(req.query.predmety)
-          console.log(req.query.vyucba)
-          res.render('experti',{predmetyList:predmetyList, vyucbaList:vyucbaList, usery:usery})
+          res.render("experti",{predmetyList:predmetyList, vyucbaList:vyucbaList, usery:usery})
         }
       })
     })
 
+  app.route("/experti/:id")
+      .get((req,res)=>{
+        User.findOne({_id:req.params.id},(err,data)=>{
+          console.log(data)
+          res.render("expert_profilovka",{data:data})
+        })
+      })
+
   
 // Odhlasenie
-app.get('/odhlasenie',(req,res)=>{
+app.get("/odhlasenie",(req,res)=>{
     req.logout();
-    res.redirect('/')
+    res.redirect("/")
 })
 
 
 /*
 // Linkedin prihlasenie
-app.get('/auth/linkedin',
-  passport.authenticate('linkedin'),
+app.get("/auth/linkedin",
+  passport.authenticate("linkedin"),
   function(req, res){
     // The request will be redirected to LinkedIn for authentication, so this
     // function will not be called.
   });
 
-app.get('/auth/linkedin/callback', passport.authenticate('linkedin', {
-  successRedirect: '/dokoncenie?username=' + req.body.username',
-  failureRedirect: '/prihlasenie'
+app.get("/auth/linkedin/callback", passport.authenticate("linkedin", {
+  successRedirect: "/dokoncenie?username=" + req.body.username",
+  failureRedirect: "/prihlasenie"
 }));
 
 */
@@ -367,7 +375,7 @@ app.listen(3000,(err,data)=>{
         console.log(err)
     }
     else {
-        console.log('Aplikacia spustena na serveri')
+        console.log("Aplikacia spustena na serveri")
         
     }
 })

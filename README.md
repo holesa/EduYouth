@@ -1,6 +1,6 @@
 Treba spravit najblizsie
 ---
-- nastavit seed data na testovanie
+- nech checkboxy zostanu zaskrtnute
 
 
 
