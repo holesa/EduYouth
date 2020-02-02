@@ -1,32 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Najdi experta</title>
-    <link rel='stylesheet' type='text/css' href='/./style.css'>
-</head>
-<body id="expertiFile">
-    
-<!--Vyhladavaci panel
+<%include ./header%>
 
-- Mesto kde je ochotny ucit // \NAJDE SA AUTOMATICKY podla mesta profesora
-// Alternativa by bolo dat zoznam miest s uz oredskrtnutou moznostou mesta profesora
-- Typ vyukovej aktivity (4typy)
-- Oblasti v ktorych chce ucit 
---> 
+<div id="expertiFile">
 
-<!-- 
-
- 
-
-<div>
-        <label><input></input></label>  
-      </div> 
-
-
- -->
- <h2><a href="/">Homepage</a></h2>
- <h2><a href="/profil">Profil</a></h2>
- <div id="filter_pre_expertov">
+<div id="filter_pre_expertov">
 <form method="GET" action="/experti"> 
  <h3>Vyhladavacie kriteria:</h3>
 
@@ -61,12 +37,7 @@
     </div>  
     <%})%>
 </div>
-      
+</div>    
   
 
-<!--Zoznam expertov podla kriterii-->
-
-
-<script type="text/javascript" src='/./script.js'></script>
-</body>
-</html>
+<%include ./footer%>

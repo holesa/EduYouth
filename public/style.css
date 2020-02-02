@@ -1,3 +1,53 @@
+body{
+padding:0;
+margin:0 0 500px 0;
+font: normal 16px Arial, Helvetica, sans-serif;
+}
+
+.container{
+width:80%;
+margin:auto;
+overflow:hidden;
+}
+
+
+main{
+  margin:80px 0 0 0;
+}
+
+
+footer{
+  width: 100%;
+  position:fixed;
+  bottom:0;
+  text-align: center;
+} 
+
+
+section:nth-child(even){
+  background-color: #ffdddd;
+}
+
+#logo{
+  width:100%;
+}
+
+#registracia-box, #prihlasenie-box{
+  border: 1px solid black;
+  background-color: blanchedalmond;
+  margin:100px auto;
+  width: 70%;
+  padding: 30px;
+  overflow: hidden;
+}
+
+
+
+
+
+
+
+
 #regForm {
     background-color: #ffffff;
     margin: 100px auto;

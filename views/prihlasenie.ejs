@@ -1,20 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>prihlasnie</title>
-</head>
-<body>
-    <h2>Prihlasenie</h2>
-    <form method='POST' action='/prihlasenie'>
+<%include ./header%>
+    
+    <div id="registracia-box">
+      <h2>Prihlasenie</h2>
+      <form method='POST' action='/prihlasenie'>
         <input type='text' name='email' placeholder='Email'>
         <input type='password' name='password' placeholder='Heslo'>
         <button type='submit'>Prihlásiť sa</button>
     </form>    
     <h2>Prihlasenie cez linkedin</h2>
     <a href='/auth/linkedin'>Prihlasit tu</a>
-    <br>
-    <br>
-    <br>
-    <a href='/'>Homepage</a>
-</body>
-</html>  
+</div>
+<%include ./footer%>

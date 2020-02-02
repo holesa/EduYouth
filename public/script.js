@@ -1,10 +1,11 @@
+
 // Experti JS
 if(document.getElementById("expertiFile")){
-const predmety = document.getElementById("predmety-tlacidlo")
-const list1    = document.getElementById("predmety-obsah")
-const list2    = document.getElementById("vyucba-obsah")
-const vyucba   = document.getElementById("vyucba-tlacidlo")
-
+  const predmety = document.getElementById("predmety-tlacidlo")
+  const list1    = document.getElementById("predmety-obsah")
+  const list2    = document.getElementById("vyucba-obsah")
+  const vyucba   = document.getElementById("vyucba-tlacidlo")  
+function displayFilterMenu(){
 predmety.addEventListener("click",(event)=>{
   list1.classList.toggle("show")
 })
@@ -24,6 +25,8 @@ window.onclick = function(event) {
     }
   }
 }
+}
+displayFilterMenu()
 
 function rememberCheckboxes(){
   // Ulož checkbox hodnoty do LocalStorage
@@ -44,9 +47,9 @@ function rememberCheckboxes(){
     }
    
   }
-  
  rememberCheckboxes()
 }
+
 
 
 // Registracia JS

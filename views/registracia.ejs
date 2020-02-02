@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Registracia</title>
-</head>
-<body>
+<%include ./header%>
+  <div id="registracia-box">
     <h2>Registracia cez email</h2>
     <form method='POST' action='/registracia' >
        <input type='email' name='email' placeholder='Email'>
@@ -17,53 +13,7 @@
     </form>
     <h2>Registracia cez linkedin</h2>
     <a href='/auth/linkedin'>Registrovať tu</a>
-    <br>
-    <br>
-    <br>
-    <a href='/'>Homepage</a>
-<!--
-    EXPERT
-    ---
-    username/?meno
-    password
-    mesto kde chce posobit / ? Univerzita
-    typ vyucby
-    oblasti v ktorych chce ucit
--->
-
-<!--
-    PROFESOR
-    ---
-    username/?meno
-    password
-
-    2 možnosti registracie:
-    A. 1 krokove
-    B. 2 krokove
-
-    2 možnosti vyplnenia profilu
-    A. Pocas registracie
-    B. Uz v profile
-
-    Profesori
-  A  1. Krok = Email 
-     2. Krok = Potvrdenie emailu / Profil + hlasenie o potvrdeni emailu
+  </div>
     
-  B  1. Krok = Oauth
 
-    Experti
-  A  1. Krok = Email
-     2. Krok = Vyplnenie 3 koloniek
-     3. Krok = Potvrdenie emailu / Profil + hlasenie o potvrdeni emailu 
-
-  B  1. Krok = Oauth
-     2. Krok = Vyplnenie 3 koloniek 
-     
-     
-     Podmienky:
-     - Kroky musia byt bez refreshu
-
--->
-
-</body>
-</html>  
+    <%include ./footer%>
