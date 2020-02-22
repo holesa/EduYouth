@@ -1,0 +1,40 @@
+
+<%include ./templates/header%>
+
+<div class="container">
+<!-- Text div-->
+  <form action="/profil" method="POST">
+    <div class="personal-profil">
+      <div class="main-title">Osobný profil</div><br>
+      <div class="description-box">
+        <%if(data.role ==="profesor"){%>
+          Ak máte dostatočne vyplnení profil, môžete prejsť na <a href="/experti">zoznam expertov</a>. Tam si vyhľadáte experta podľa svojích
+          kritérií a potom ho môžete kontaktovať.
+          <%}else{%>
+            V tomto bode stačí, ak si vyplníte profil. Podľa neho vás budú hľadať experti a ak nejakéko zaujmete, kontaktuje vás.
+            <%}%>  
+      </div>
+      <div class="form-group-block">
+        <label class="form-label" for="first-name">Meno</label>
+        <input id="first-name" class="form-control" type="text" placeholder="" value="<%=data.firstName%>" name="firstName" required>
+      </div>
+      <div class="form-group-block">
+        <label class="form-label" for="second-name">Priezvisko</label>
+        <input id="second-name" class="form-control" type="text" placeholder="" value="<%=data.secondName%>" name="secondName" required>
+      </div>
+      <div class="form-group-block">
+        <label class="form-label" for="occupation">Zamestnanie</label>
+        <input id="occupation" class="form-control" type="text" placeholder="" value="<%=data.occupation%>" name="occupation" required>
+      </div>
+      <div class="form-group-block">
+        <label class="form-label" for="education">Najvyššie dosiahnuté vzdelanie</label>  
+        <input id="education" class="form-control" type="text" placeholder="" value="<%=data.education%>" name="education" required>
+      </div>
+      <div class="form-group-block">
+        <label class="form-label" for="contact-email" for="education">Kontaktný email</label>  
+        <input id="contact-email" class="form-control" type="email" placeholder="" value="<%=data.email%>" name="contactEmail" required>
+      </div>
+    <button type="submit" class="submit-btn">Upraviť</button>    
+  </div>
+</form>
+   <%include ./templates/footer%>

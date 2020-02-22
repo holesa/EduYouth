@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>UnivApp</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="Miesto pre vzdelanie">
+        <meta name="keywords" content="HTML,CSS,XML,JavaScript">
+        <meta name="author" content="John Doe">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel='stylesheet' type='text/css' href='http://localhost:3000/css/style.css'>
+        <link rel="stylesheet" type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">          
+    </head>
+    <body>
+          <header>
+                <nav class="navbar navbar-expand-md navbar-light">
+                      <div class="navbar-brand">
+                          <a href="/"><img id="logo" src=""></a>
+                     </div>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                               <span class="navbar-toggler-icon"></span>
+                            </button>
+                     <div class="collapse navbar-collapse" id="navbarNav">
+                       <ul class="navbar-nav ml-auto">
+                         <% if(!user){%>
+                            <li class="nav-link"><a class="nav-color" href="/">Domov</a></li>
+                            <li class="nav-link"><a class="nav-color" href="/registracia">Registrácia</a></li>
+                            <li class="nav-link"><a class="nav-color" href="/prihlasenie">Prihlásenie</a></li>
+                          <%} else if(user.role==="profesor"){%>
+                            <li class="nav-link"><a class="nav-color" href="/profil">Profil</a></li>
+                            <li class="nav-link"><a class="nav-color" href='/odhlasenie'>Odhlásenie</a></li>  
+                            <li class="nav-link"><a class="nav-color" href='/experti'>Zoznam expertov</a></li>  
+                          <%} else {%>
+                            <li class="nav-link"><a class="nav-color" href="/profil">Profil</a></li>
+                            <li class="nav-link"><a class="nav-color" href='/odhlasenie'>Odhlásenie</a></li> 
+                          <%}%>  
+                      </ul>
+                    </div> 
+                </nav>
+        </header> 
+        <div class="alerts">
+          <% if(error && error.length>0){%>
+            <div class="alert alert-danger"><%=error%></div>
+          <%}%>
+          <% if(success && success.length>0){%>
+            <div class="alert alert-success"><%=success%></div>  
+          <%}%> 
+        </div>  
+
+            
+
+
+     

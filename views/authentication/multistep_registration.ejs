@@ -1,0 +1,128 @@
+<%include ../templates/header%>
+<div class="alert"></div>
+<div class="container">
+    <div id="multistep-registration">
+          <form id="regForm" method="POST" action="/registracny-proces">
+                <!-- Progress bar -->
+                <ul id="form-progress-bar" class="progress-bar">
+                  <li class="step active">Rola</li>
+                  <li id="step-two" class="step">Predmety</li>
+                  <li class="step">Profil</li>
+                  <li class="step">Dokončenie</li>
+                </ul>
+
+                <!-- Step 1 -->
+                <div class="tab">
+                    <div class="main-title">Prosím, určite kto ste:</div><br>
+                    <label for="expert-input">Expert:</label>
+                      <input id="expert-input" type="radio" class="role" name="role" value="expert"><br>
+                    <label for="profesor-input">Profesor:</label> 
+                      <input id="profesor-input" type="radio" name="role" class="role" value="profesor">
+                      <div class="error-box"></div>
+                  </div>
+
+                <!-- Step 2 -->
+                <div class="tab">
+                  <div class="description-box">Prosím, vyberte si z každej skupiny aspoň 1 výber.</div>
+                    <br>
+                      <div class="subtitle group-block bold">Predmety
+                        <div class="tooltip-box">
+                          <i class="fas fa-info-circle"></i>
+                          <div class="tooltip-text">Predmety, ktoré ste ochotný vyučovať.</div>
+                        </div>
+                      </div>
+                    <div class="register-scrollBox">
+                      <%for(let i=0;i<internalData.subjects.length;i++){%>
+                      <div class="form-group">
+                          <label for="subject <%=i%>"><%=internalData.subjects[i]%></label>
+                          <input type="checkbox" class="subjectCheckbox" id="subject <%=i%>" name="subject" value="<%=internalData.subjects[i]%>"><br>
+                      </div>  
+                    <%}%>
+                    </div>
+                    <div class="subtitle group-block bold">Typ výučby
+                      <div class="tooltip-box">
+                        <i class="fas fa-info-circle"></i>
+                        <div class="tooltip-text">Typ výučby, ktorý vám vyhovuje.</div>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="register-scrollBox">
+                      <%for(let j=0;j<internalData.teaching.length;j++){%>
+                        <div class="form-group">
+                            <label for="teaching <%=j%>"><%=internalData.teaching[j]%></label>
+                            <input type="checkbox" class="teachingCheckbox" id="teaching <%=j%>" name="lecturing" value="<%=internalData.teaching[j]%>" placeholder="Typ vyucby ktory si volim"><br>
+                        </div>  
+                      <%}%>
+                    </div>
+                    <div class="subtitle group-block bold">Mesto
+                      <div class="tooltip-box">
+                        <i class="fas fa-info-circle"></i>
+                        <div class="tooltip-text">Mestá, kde ste ochotný vyučovať.</div>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="register-scrollBox">
+                      <%for(let k=0;k<internalData.city.length;k++){%>
+                      <div class="form-group">  
+                            <label for="city <%=k%>"><%=internalData.city[k]%></label>
+                            <input type="checkbox" class="cityCheckbox" id="city <%=k%>" name="city" value="<%=internalData.city[k]%>" placeholder="Mesto kde chcem ucit"><br>
+                      </div>  
+                    <%}%>  
+                  </div>  
+                </div>
+                <div class="error-box"></div>
+              </div>  
+            
+                <!-- Step 3 -->
+                <div class="tab">
+                  <div class="personal-profil">
+                    <div class="tab-title">Osobný profil</div><br>
+                    <div class="form-group-block">
+                      <label class="profil-label" for="first-name">Meno*</label>
+                      <input id="first-name" class="form-control profile-field" type="text" placeholder="" name="firstName" required>
+                    </div>
+                    <div class="form-group-block">
+                      <label class="profil-label" for="second-name">Priezvisko*</label>
+                      <input id="second-name" class="form-control profile-field" type="text" placeholder="" name="secondName" required>
+                    </div>
+                    <div class="form-group-block">
+                      <label class="profil-label" for="occupation">Zamestnanie*</label>
+                      <input id="occupation" class="form-control profile-field" type="text" placeholder="" name="occupation" required>
+                    </div>
+                    <div class="form-group-block">
+                      <label class="profil-label" for="education">Najvyššie dosiahnuté vzdelanie*</label>  
+                      <input id="education" class="form-control profile-field" type="text" placeholder="" name="education" required>
+                    </div>
+                    <div class="form-group-block">
+                      <label class="profil-label" for="contact-email" for="education">Kontaktný email*</label>  
+                      <input id="contact-email" class="form-control profile-field" type="email" placeholder="" name="contactEmail" required>
+                    </div>
+                    <div class="form-group-block">
+                      <label class="profil-label" for="note" for="education">Poznámka</label>  
+                      <textarea id="note" class="form-control" name="note"></textarea>
+                    </div>  
+                </div>
+                <div class="error-box"></div>
+              </div>
+
+
+              <!--Step 4 -->
+              <div class="tab">
+                <div class="text-center"><img src="img/email.png"></div> 
+                <h3 class="main-title">Email s potvrdením o aktivácií úču, bol poslaný na váš email.</h3>
+              </div>
+
+                <!-- Navigation buttons -->
+                <div class="navigation-buttons">
+                    <button type="button" id="prevBtn" class="btn btn-dark" onclick="nextPrev(-1)">Späť</button>
+                    <button type="button" id="nextBtn" class="btn btn-success" onclick="nextPrev(1)">Ďalej</button>
+                </div>
+          </form>
+    </div>
+</div>
+   
+<%include ../templates/footer%>
+<%if(success===true){%>
+  <script> 
+    showLastStep("<%=role%>")</script>
+<%}%>

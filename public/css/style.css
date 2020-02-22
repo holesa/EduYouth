@@ -1,0 +1,410 @@
+body{
+padding:0;
+line-height: 25px;
+font-size: 16px;
+font-family: "Roboto", sans-serif;
+font-weight: 400;
+counter-reset: section;
+}
+
+a{
+  text-decoration: none !important;
+}
+
+ul{
+  list-style-type: none !important;
+}
+
+footer{
+  width: 100%;
+  bottom:0;
+  text-align: center;
+  position: relative;
+}
+
+header{
+  background-color: #002347;
+}
+
+#homepage header{
+  background-color: #0000;
+  width: 100%;
+  z-index: 99;
+  position: absolute;
+  top:0;
+  color: #470000 !important;
+}
+
+
+section:nth-child(even){
+  background-color: #ffdddd;
+}
+
+#logo{
+  width:100%;
+}
+
+.auth-box{
+  border: 0.3px solid #ededed;
+  border-radius: 10px;
+  background-color: #ededed;
+  margin:100px auto;
+  width: 100%;
+  padding: 30px;
+  overflow: hidden;
+}
+
+#regForm {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+#multistep-registration{
+    margin: 50px auto;
+    text-align: center;
+
+}
+
+#form-progress-bar{
+  margin-bottom: 70px;
+}
+
+.buttons-box .filter-content{
+  display: none;
+}
+
+  .tab {
+    display: none;
+  }
+
+  .step.active {
+    opacity: 1;
+  }
+  
+  .step.finish {
+    background-color: #4CAF50;
+  }
+  
+
+  .filter-content{
+    display: none;
+    position: absolute;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    padding: 10px;
+    width: 50%;
+    left: 0px;
+  }
+
+  .show{
+    display: block;
+}  
+
+.progress-bar{
+  display: flex;
+  flex-direction: row;
+  background: none;
+  color: black;
+}
+
+.progress-bar li{
+  width: 33.33%;  
+  float: left;
+  text-align: center;
+  position: relative;
+  
+}
+
+.progress-bar li:before{
+  content: counter(section);
+  counter-increment: section;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  line-height: 30px;
+  display: block;
+  text-align: center;
+  margin: 0 auto 10px auto;
+  background-color: white;
+ 
+}
+
+.progress-bar li:after{
+  content: '';
+  width: 100%;
+  height: 1px;
+  background-color: #ddd;
+  position: absolute;
+  top: 15px;
+  left: -50%;
+  z-index: -1; 
+}
+
+.progress-bar li:first-child:after{
+  content:none;
+}
+
+.progress-bar li.active{
+  color:#e44545;
+}
+
+.progress-bar li.active:before{
+  border-color: #e44545;
+}
+
+.progress-bar li.active:before, .progress-bar li.active:after{
+  background-color: #e44545;
+  color: white;
+}
+
+.register-scrollBox:nth-child(even){
+  overflow: scroll;
+  height: 200px;
+  overflow-x: hidden;
+}
+
+
+.bold{
+  font-weight: 600;
+}
+
+.group-block{
+  margin-top: 1rem;
+  margin-right: 0.5rem;
+}
+
+.form-group-block{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.form-label{
+  text-align: left;
+  color:#696666;
+}
+
+.tab-title{
+  font-size: 1.6rem;
+}
+
+.description-box{
+  font-size: 1rem;
+  background-color: #ffdddd;
+  margin-bottom: 1rem;
+  padding: 5px;
+}
+
+.expert-box{
+  border: 1px #ccc solid;
+  width: 100%;
+  padding: 20px;
+}
+.buttons-box{
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.filter-box{
+  margin-bottom: 30px;
+}
+
+.personal-profil{
+  margin: 50px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; 
+}
+
+.page-middle{
+  margin: 200px auto;
+  text-align: center;
+}
+
+.homepage-banner{
+  background-color: #EBE5E9;
+  background-image: url("../img/home-banner.jpg");
+  background-size: cover;
+  width: 100%;
+  height: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.homepage-box{
+  color: #002347;
+  font-family: "Rubik", sans-serif;
+  margin: 200px auto;
+}
+
+.homepage-box h2{
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.homepage-box p{
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.primary-btn {
+  display: inline-block;
+  background: #fdc632;
+  padding: 0px 48px;
+  color: #002347;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 50px;
+  border-radius: 5px;
+  outline: none !important;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.primary-btn:hover {
+  background: #002347;
+  color: #fdc632;;
+  }
+
+  .submit-btn{
+    box-shadow:inset 0px 1px 3px 0px #3dc21b;
+    background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
+    background-color:#44c767;
+    border-radius:5px;
+    border:1px solid #18ab29;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:15px;
+    font-weight:bold;
+    padding:8px 23px;
+    text-decoration:none;
+    text-shadow:0px -1px 0px #2f6627;
+  }
+  .submit-btn:hover {
+    background:linear-gradient(to bottom, #5cbf2a 5%, #44c767 100%);
+    background-color:#5cbf2a;
+  }
+  .submit-btn:active {
+    position:relative;
+    top:1px;
+  }
+
+.text-uppercase {
+    text-transform: uppercase !important;
+}
+
+.text-center{
+  text-align: center;
+}
+
+.nav-color{
+  color: #fff ;
+}
+
+.auth-box h2{
+  margin-bottom: 1rem;
+}
+
+.navigation-buttons{
+  text-align: center;
+}
+
+.tooltip-box {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-box .tooltip-text {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  font-size: 0.8rem;
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip-box:hover .tooltip-text {
+  visibility: visible;
+}
+
+.main-title{
+  font-size: 1.5rem;
+}
+
+.subtitle{
+  font-size: 1rem;
+}
+
+.experts-box{
+  margin: 50px auto;
+}
+
+.filter-btn{
+  width: 50%;
+}
+
+.expert-profile{
+  margin: 50px auto;
+  width: 60%;
+  text-align: left;
+}
+
+.homepage-box p{
+  font-size: 1.2rem;
+  margin: 1rem 0 1.5rem 0;
+}
+
+/* Desktop specific styles */
+@media only screen and (min-width:600px){
+  .expert-box{
+    border: 1px #ccc solid;
+    width: 50%;
+    padding: 20px;
+  }
+  .personal-profil{
+    margin: 50px auto;
+    width: 60%; 
+  } 
+  .form-group-block{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin-bottom: 1rem;
+  } 
+  .auth-box{
+    border: 0.3px solid #ededed;
+    border-radius: 10px;
+    background-color: #ededed;
+    margin:100px auto;
+    width: 40%;
+    padding: 30px;
+    overflow: hidden;
+  }
+
+  .filter-btn{
+    width: 15%;
+  }
+
+  .filter-content{
+    display: none;
+    position: absolute;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    padding: 10px;
+    width: 50%;
+    left: initial;
+  }
+}

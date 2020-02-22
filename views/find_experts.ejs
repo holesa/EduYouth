@@ -1,0 +1,57 @@
+<%include ./templates/header%>
+
+<div id="experts-file">
+  <div class="container">
+    <div class="experts-box">  
+      <div class="filter-box">
+        <form method="GET" action="/experti"> 
+          <h3>Vyhľadávacie kritéria:</h3>
+          <div class="buttons-box">
+            <div class="group-block">
+              <button type="button" class="btn btn-primary" id="teaching-btn">Výučba</button>
+              <div id="teaching-box" class="filter-content">
+                <%for(let i = 0; i<internalData.teaching.length; i++){%>
+                  <label><input class="checkbox" type="checkbox" name="vyucba" id="<%='optionA'+i%>" value="<%=internalData.teaching[i]%>"><%=internalData.teaching[i]%></label>
+                <%}%>
+              </div>
+            </div>
+            <div class="group-block">
+              <button type="button" class="btn btn-primary" id="subjects-btn">Predmety</button>
+                  <div id="subjects-box" class="filter-content">
+                    <%for(let j = 0; j<internalData.subjects.length; j++){%>
+                        <label><input class="checkbox" type="checkbox" name="predmety" id="<%='optionB'+j%>" value="<%=internalData.subjects[j]%>"><%=internalData.subjects[j]%></label>
+                        <%}%>
+                  </div>
+            </div>
+            <div class="group-block">
+              <button type="button" class="btn btn-primary" id="city-btn">Mesto</button>
+                    <div id="city-box" class="filter-content">
+                      <%for(let k = 0; k<internalData.city.length; k++){%>
+                          <label><input class="checkbox" type="checkbox" name="city" id="<%='optionC'+k%>" value="<%=internalData.city[k]%>"><%=internalData.city[k]%></label>
+                          <%}%>
+                    </div>            
+            </div>
+            <br>
+          </div>
+          <button type="submit" class="submit-btn filter-btn">Vyhľadaj</button>    
+        </form>
+      </div>
+
+        <div class="experts-list">  
+            <%users.forEach(user=>{%>
+                <div class="expert-box">
+                  <div>Meno: <%=user.firstName%></div>
+                  <div>Priezvisko: <%=user.secondName%></div>
+                  <div>Ochotný vyučovať v meste: <%=user.city%></div>
+                  <div>Povolanie: <%=user.occupation%></div><br>
+                  <a href="experti/<%=user.id%>" target="_blank">Dozvedieť sa viac o expertovi</a>
+                </div>  
+            <%})%>
+        </div>   
+  </div>
+</div>    
+</div>    
+</div>    
+  
+
+<%include ./templates/footer%>

@@ -1,17 +1,7 @@
-NABUDUCE (Must!!!):
----
-- Spravit navbar nahrubo + HTML+CSS practice 
-. ako navrhovat Wireframe ==> Pockat na odpoved od FS predtymto 
-. Oauth autentikacia (Google)
-. Napevno nadizajnovat databazu
-
-
 Co treba spravit na koniec:
 ---
-- poziadanie zabudnuteho hesla
-- mobilna verzia (mysliet pri frontende)
-- pridat ES6 syntax - hlavne classes
-- testing Mocha/Chai
+Uplne na koniec az ked budu vsetky testy
+- Ak zostane cas pokracovat v testoch
 
 
 V1+
@@ -37,6 +27,16 @@ order, align-self ***
 - responzivita  ***
 - bootstrap     ***
 
+
+
+Osobný profil polia
+----------------
+Meno
+Priezvisko
+Mesto bydliska
+Kontaktná emailová adresa
+Vzdelanie
+Zamestnanie
 
 
 
