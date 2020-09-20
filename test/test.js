@@ -1,10 +1,10 @@
-// Just a few examples of unit tests to demonstrate the purpose
-
 const assert    = require("chai").assert,
       expect    = require("chai").expect,
       request   = require("supertest"),
-      app       = require("../app");
+      app       = require("../app"),
+      clear     = require("./clear");  
 
+// Login
 describe("App",()=>{
     describe("Login",()=>{  
         it("Successful login => should redirect to /profil",()=>{
@@ -13,9 +13,7 @@ describe("App",()=>{
             .set("Accept","application/json")
             .type("form")
             .send({"email":"andhox17@gmail.com", "password" : "test"})
-            .then((res)=>{
-                assert.equal(res.header.location,"/profil")
-            });
+            .expect("Location","/profil")
         });  
 
         it("Failed login => should redirect to /prihlasenie",()=>{
@@ -24,22 +22,19 @@ describe("App",()=>{
             .set("Accept","application/json")
             .type("form")
             .send({"email":"andhox17@gmail.com", "password" : "testt"})
-            .then((res)=>{
-                assert.equal(res.header.location,"/prihlasenie")
-            }); 
+            .expect("Location","/prihlasenie")
         });
     });
 
+// Registration
     describe("Register",()=>{  
         it("Successful registration => should redirect to /registracny-proces",()=>{
             return request(app)
             .post("/registracia")
             .set("Accept","application/json")
             .type("form")
-            .send({"email":"viliamslovak@gmail.com", "password" : "test123456"})
-            .then((res)=>{
-                assert.equal(res.header.location,"/registracny-proces")
-            }); 
+            .send({"email":"testemail@gmail.com", "password" : "test123456"})
+            .expect("Location","/registracny-proces")
         });
 
         it("Failed registration => should redirect to /registracia",()=>{
@@ -48,10 +43,29 @@ describe("App",()=>{
             .set("Accept","application/json")
             .type("form")
             .send({"email":"andhox17@gmail.com", "password" : "test"})
-            .then((res)=>{
-                assert.equal(res.header.location,"/registracia")
-            }); 
+            .expect("Location","/registracia")
         });
-    });   
+    }); 
+    
+ // Profile
+    describe("Profile",()=>{
+        it("User is logged in => should redirect to /profil",()=>{
+            return request(app)
+            .post("/prihlasenie")
+            .set("Accept","application/json")
+            .type("form")
+            .send({"email":"andhox17@gmail.com", "password" : "test"})
+            .expect("Location","/profil")
+        })
+
+        it("User is not logged in => should redirect to /prihlasenie",()=>{
+            return request(app)
+            .get("/profil")
+            .expect("Location","/prihlasenie")
+        })
+    })
 
 });
+
+// Remove initial testing data
+clear();    

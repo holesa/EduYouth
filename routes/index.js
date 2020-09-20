@@ -9,6 +9,7 @@ const express               = require("express"),
       nodemailer            = require("nodemailer"),
       route                 = express.Router(),
       send_email            = require("../config/send_email");
+      dotenv                = require("dotenv");
    
 // Homepage
 route.get("/",(req,res)=>{
@@ -16,17 +17,21 @@ route.get("/",(req,res)=>{
     res.redirect("/profil");
   }
   else{
-    res.render("index")
+    res.render("index");
   }
 })
 
 // Registration
 route.route("/registracia")
     .get((req,res)=>{
-    res.render("authentication/registration")
+      if(req.user){
+        res.redirect("/profil");
+      } else{
+        res.render("authentication/registration");
+   }
 })
     .post((req,res)=>{
-    if(req.body.email==="" || req.body.password===""){
+    if(req.body.email === "" || req.body.password === ""){
       req.flash("error","Vyplňte obe polia.");
       res.redirect("/registracia");
     }
@@ -40,19 +45,19 @@ route.route("/registracia")
     const newUser = new User(req.body);
     newUser.save((err,user)=>{
         if(err){
-           req.flash("error","Táto emailová adresa už existuje.")
+           req.flash("error","Táto emailová adresa už existuje.");
+           console.log(err);
            res.redirect("/registracia");
           }
         else{
-          console.log("I AM USER " + user)
            req.login(user, error=>{
               if(error) throw error; 
               else{
               res.redirect("/registracny-proces");
-                  }
-                  });
-              } 
-              })    
+              }
+            });
+           } 
+         })    
       }
     })
 
@@ -67,12 +72,13 @@ route.route("/registracny-proces")
         req.body,((err,data)=>{
          if(err) throw err;
          else{ 
-          const link ="http://localhost:3000/potvrdenie?token="
-          const content = "<p>Prosím potvrďte kliknutím na tento link vytvorenie uctu</p>"
+          const link = process.env.DOMAIN + "/potvrdenie?token=";
+          const content = "<p>Prosím potvrďte kliknutím na tento link vytvorenie účtu</p>";
           const userId = data._id;
           const email = data.email;
+          const subject = "Vítajte na EduYouth";
           // Include confirmation_email file
-          send_email(userId,link,content,email);
+          send_email(userId,link,content,email,subject);
             res.render("authentication/multistep_registration",{internalData:internalData,success:true,role:role})
           }
         })
@@ -111,9 +117,13 @@ route.route("/potvrdenie")
 
 // Login
 route.route("/prihlasenie")
-    .get((middleware.isLoggedIn),(req,res)=>{
-      res.redirect("/profil")
-    })
+    .get((req,res)=>{
+      if(req.user){
+        res.redirect("/profil");
+      } else{
+        res.render("authentication/login");
+    }
+  })
     .post(passport.authenticate("local",{
       failureRedirect:"/prihlasenie",
       failureFlash:"Nespravne prihlasovacie udaje"
@@ -122,7 +132,7 @@ route.route("/prihlasenie")
      res.redirect("/profil")
     })
 
-// Reset forgotten passsword
+// Reset a forgotten passsword
 route.route("/strata-hesla")
     .get((req,res)=>{
       res.render("authentication/forgot");
@@ -136,11 +146,12 @@ route.route("/strata-hesla")
       }
       else{
       const userId = data._id; 
-      const link ="http://localhost:3000/zmena-hesla?token=";
+      const link = process.env.DOMAIN + "/zmena-hesla?token=";
       const content = "<p>Prosím potvrďte kliknutím na tento link zmenu hesla</p>";
       const email = data.email;
-      send_email(userId,link,content,email)
-        req.flash("success","Email bol poslany");
+      const subject = "Zmena hesla";
+      send_email(userId,link,content,email,subject)
+        req.flash("success","Email bol poslaný");
         res.redirect("/strata-hesla");
       }  
       })
@@ -173,12 +184,12 @@ route.route("/zmena-hesla")
             User.update({_id:data._userId},{password:req.body.passwordFirst},(err,complete)=>{
               if(err) throw err;
               else{
-                res.send("Heslo bolo zmenene")
+                req.flash("success","Heslo bolo zmenené");
+                res.redirect("/prihlasenie");
               }
             })
            }
          })
-         
        } 
     })
 

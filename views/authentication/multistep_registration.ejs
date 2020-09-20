@@ -108,8 +108,10 @@
 
               <!--Step 4 -->
               <div class="tab">
-                <div class="text-center"><img src="img/email.png"></div> 
-                <h3 class="main-title">Email s potvrdením o aktivácií úču, bol poslaný na váš email.</h3>
+                <div class="text-center">
+                  <img src="img/email.png">
+                  <h3 class="main-title">Email s potvrdením o aktivácií účtu bol poslaný na váš email.</h3>
+                </div> 
               </div>
 
                 <!-- Navigation buttons -->
@@ -123,6 +125,5 @@
    
 <%include ../templates/footer%>
 <%if(success===true){%>
-  <script> 
-    showLastStep("<%=role%>")</script>
+  <script>showLastStep("<%=role%>")</script>
 <%}%>

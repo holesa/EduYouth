@@ -5,21 +5,21 @@ if(document.getElementById("homepage")){
   for(let i = 0;i<navLinks.length;i++){
     navLinks[i].style.color = "#002347";
     }
-  logo.src="http://localhost:3000/img/home-logo.png";  
+  logo.src="/img/home-logo.png";  
 }
 else{
-  logo.src="http://localhost:3000/img/logo.png";
+  logo.src="/img/logo.png";
 }
 
 
 // Experts file
 if(document.getElementById("experts-file")){
-  const subjectsBtn     = document.getElementById("subjects-btn")
-  const subjectsBox     = document.getElementById("subjects-box")
-  const teachingBox     = document.getElementById("teaching-box")
-  const teachingBtn     = document.getElementById("teaching-btn")
-  const cityBox         = document.getElementById("city-box")
-  const cityBtn         = document.getElementById("city-btn") 
+  const subjectsBtn     = document.getElementById("subjects-btn"),
+        subjectsBox     = document.getElementById("subjects-box"),
+        teachingBox     = document.getElementById("teaching-box"),
+        teachingBtn     = document.getElementById("teaching-btn"),
+        cityBox         = document.getElementById("city-box"),
+        cityBtn         = document.getElementById("city-btn"); 
 
 function displayFilterMenu(){
   subjectsBtn.addEventListener("click",(event)=>{
@@ -100,14 +100,12 @@ function showTab(n) {
   tab[n].style.display = "block";
   if(n === 0) {
     document.getElementById("prevBtn").style.display = "none";
-  } 
-    else{
+  } else{
       document.getElementById("prevBtn").style.display = "inline";
     }
   if(n === (tab.length - 2)) {
     nextBtn.innerHTML = "Potvrdiť";
-  } 
-    else{
+  }else{
       document.getElementById("nextBtn").innerHTML = "Ďalej";
     }
   activeInactive(n)
@@ -127,12 +125,12 @@ function nextPrev(n) {
         return false
       }
       // Exlude step two if you are a professor and go forward
-        if(role === "profesor" && currentTab===0 && n===1){
+        if(role === "profesor" && currentTab === 0 && n === 1){
         currentTab = 2;
         stepTwo.style.display = "none";
       }
       // Exlude step two if you are a professor and go back
-       else if(role === "profesor" && currentTab===2 && n===-1){ 
+       else if(role === "profesor" && currentTab === 2 && n === -1){ 
         currentTab = 0;
         }
       // If you are a expert or a professor at the last step, go back or forward by one tab
@@ -149,18 +147,18 @@ function nextPrev(n) {
 // Check if a field is empty
 function validateForm(n) {
   let valid = ""
-  const roleRadio = document.getElementsByClassName("role");
-  const teachingCheckbox = document.getElementsByClassName("teachingCheckbox");
-  const subjectCheckbox = document.getElementsByClassName("subjectCheckbox");
-  const cityCheckbox = document.getElementsByClassName("cityCheckbox");
-  const profileField = document.getElementsByClassName("profile-field");
+  const roleRadio = document.getElementsByClassName("role"),
+        teachingCheckbox = document.getElementsByClassName("teachingCheckbox"),
+        subjectCheckbox = document.getElementsByClassName("subjectCheckbox"),
+        cityCheckbox = document.getElementsByClassName("cityCheckbox"),
+        profileField = document.getElementsByClassName("profile-field");
   if(n>0){
   // Validate tab 1
-    if(currentTab===0){
+    if(currentTab === 0){
       return validateInput(0,roleRadio,"Vyberte, či ste profesor alebo expert.")
     }
     // Validate tab 2
-    if(currentTab===1){
+    if(currentTab === 1){
       if(!validateInput(1,subjectCheckbox,"Vyberte aspoň jeden predmet.")){
         return false;
       }
@@ -175,7 +173,7 @@ function validateForm(n) {
       }
     }
     // Validate tab 3
-    if(currentTab===2){
+    if(currentTab === 2){
         if(!validateInput(2,profileField,"Vyplňte všetky polia označené *")){
           return false;
         }  
@@ -192,7 +190,7 @@ function validateForm(n) {
 function validateInput(n,input,alert){
   let valid = ""
   for(let i=0;i<input.length;i++){
-    if(n===2){
+    if(n === 2){
       if(input[i].value===""){
         valid = false;
         errorBox.classList.add("alert-danger")

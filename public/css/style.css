@@ -44,16 +44,6 @@ section:nth-child(even){
   width:100%;
 }
 
-.auth-box{
-  border: 0.3px solid #ededed;
-  border-radius: 10px;
-  background-color: #ededed;
-  margin:100px auto;
-  width: 100%;
-  padding: 30px;
-  overflow: hidden;
-}
-
 #regForm {
     width: 100%;
     margin: 0 auto;
@@ -67,6 +57,16 @@ section:nth-child(even){
 
 #form-progress-bar{
   margin-bottom: 70px;
+}
+
+.auth-box{
+  border: 0.3px solid #ededed;
+  border-radius: 10px;
+  background-color: #ededed;
+  margin:100px auto;
+  width: 100%;
+  padding: 30px;
+  overflow: hidden;
 }
 
 .buttons-box .filter-content{
@@ -185,6 +185,10 @@ section:nth-child(even){
 .form-label{
   text-align: left;
   color:#696666;
+}
+
+.checkbox{
+  margin: 5px;
 }
 
 .tab-title{

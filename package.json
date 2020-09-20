@@ -1,10 +1,10 @@
 {
-  "name": "univapp",
+  "name": "eduyouth",
   "version": "1.0.0",
-  "description": "Testovacia verzia",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --timeout 20000 || exit 0",
+    "test": "mocha || exit 0",
     "start": "nodemon app.js"
   },
   "author": "",
@@ -14,17 +14,17 @@
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
     "connect-flash": "^0.1.1",
-    "ejs": "^2.7.1",
+    "dotenv": "^8.2.0",
+    "ejs": "^2.7.4",
     "express": "^4.17.1",
-    "express-session": "^1.17.0",
-    "helmet": "^3.21.2",
-    "mocha": "^7.0.1",
-    "mongoose": "^5.7.6",
-    "nodemailer": "^6.3.1",
+    "express-session": "^1.17.1",
+    "helmet": "^3.23.3",
+    "mocha": "^7.2.0",
+    "mongoose": "^5.10.6",
+    "nodemailer": "^6.4.11",
     "nodemon": "^1.19.4",
-    "passport": "^0.4.0",
+    "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "should": "^13.2.3",
     "supertest": "^4.0.2"
   }
 }

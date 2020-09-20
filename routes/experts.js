@@ -24,7 +24,6 @@ route.route("/")
         city:{
           $in: req.query.city===undefined ? internalData.city : req.query.city
         }
-
     }
       User.find(filter,(err,users)=>{
         if(err) throw err;

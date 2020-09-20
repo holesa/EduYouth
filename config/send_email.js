@@ -3,7 +3,7 @@ LocalStrategy         = require("passport-local"),
 Token                 = require("../db/models/token"),
 nodemailer            = require("nodemailer");
 
-send_email = function(userId,link,content,email){
+send_email = function(userId,link,content,email,subject){
     // Generuj token
     const token = Math.floor(Math.random()*100000)
     const newToken = new Token({
@@ -15,19 +15,19 @@ send_email = function(userId,link,content,email){
        if(err)throw err;
      })
    // Verification link
-   const fullLink =link+token
+   const fullLink = link + token;
             
    // Email content
-   const fullContent = content + fullLink
+   const fullContent = content + fullLink;
 
     // Create reusable transporter object using the default SMTP transport
     const transporter = nodemailer.createTransport({
-           host: "smtp.gmail.com",
+           host: "SMTP.office365.com",
            port: 587,
            secure: false, 
            auth: {
-               user: "feedtheyouth20@gmail.com", 
-               pass: ">{%n.;jbCTAs7:&q" 
+               user: process.env.OUR_EMAIL, 
+               pass: process.env.OUR_EMAIL_PASSWORD 
            },
            tls:{
              rejectUnauthorized:false
@@ -36,10 +36,10 @@ send_email = function(userId,link,content,email){
 
        // Send mail with defined transport object
        transporter.sendMail({
-           from: "'FeedTheYouth' <feedtheyouth20@gmail.com>", 
+           from: `EduYouth <${process.env.OUR_EMAIL}>`, 
            to: email, 
-           subject: "Hello from TheFeedTheYouth", 
-           text: "Hello again", 
+           subject: subject,
+           text: fullContent, 
            html: fullContent
        });
     }

@@ -1,6 +1,5 @@
 const express               = require("express"),
       app                   = express(),
-      path                  = require("path"),
       ejs                   = require("ejs"),
       mongoose              = require("mongoose"),
       User                  = require("./db/models/user"),
@@ -13,25 +12,39 @@ const express               = require("express"),
       bcrypt                = require("bcryptjs"),
       nodemailer            = require("nodemailer"),
       flash                 = require("connect-flash"),
-      helmet                = require("helmet");
-      
+      helmet                = require("helmet"),
+      dotenv                = require("dotenv");
       
 // Require routes
-const indexRoute            = require("./routes/index.js"),
-      expertsRoute          = require("./routes/experts.js"),
-      profileRoute          = require("./routes/profile.js");
+const indexRoute            = require("./routes/index"),
+      expertsRoute          = require("./routes/experts"),
+      profileRoute          = require("./routes/profile");
 
 // General configurations
 app.set("view engine","ejs");
 app.use(helmet());
-app.use(express.static(__dirname + "/public/"));
+app.use(express.static("public"));
 app.use(bodyParser.urlencoded({
     exdended:false
 }));
 
+// Configure env and port
+dotenv.config();
+const port = parseInt(process.env.PORT);
+
 // Connect to database
-mongoose.connect("mongodb://localhost/user",{useNewUrlParser:true});
-seedDb()
+const url = `mongodb://${process.env.MONGO_HOSTNAME}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}?authSource=admin`;
+mongoose.connect(url, {useNewUrlParser: true},(err,res)=>{
+  if(err) {
+    console.log(err);
+  }
+  else {
+    console.log('MongoDB connection succeeded.');
+  }
+});
+
+// Create seed data for database - call just once
+//seedDb()
 
 // Passport configuration
 app.use(session({
@@ -87,13 +100,11 @@ app.use("/", indexRoute);
 
 
 // Server listen
-app.listen(3000,(err,data)=>{
+app.listen(port,(err,data)=>{
     if (err){
         console.log(err)
-    }
-    else {
+    } else {
         console.log("Aplikacia spustena na serveri")
-        
     }
 })
 
