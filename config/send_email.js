@@ -1,6 +1,6 @@
 passport              = require("passport"),
 LocalStrategy         = require("passport-local"),
-Token                 = require("../db/models/token"),
+Token                 = require("../db/models/Token"),
 nodemailer            = require("nodemailer");
 
 send_email = function(userId,link,content,email,subject){
@@ -15,7 +15,8 @@ send_email = function(userId,link,content,email,subject){
        if(err)throw err;
      })
    // Verification link
-   const fullLink = link + token;
+   let fullLink = link + token;
+   fullLink = `<a href=${fullLink} target="_blank">${fullLink}</a>`;
             
    // Email content
    const fullContent = content + fullLink;
