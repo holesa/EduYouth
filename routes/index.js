@@ -1,8 +1,8 @@
 const express               = require("express"),
       app                   = express(),
       middleware            = require("../middleware/index"),
-      User                  = require("../db/models/user"),
-      Token                 = require("../db/models/token"),
+      User                  = require("../db/models/User"),
+      Token                 = require("../db/models/Token"),
       internalData          = require("../db/seeds/internal"),
       passport              = require("passport"),
       bcrypt                = require("bcryptjs"),
@@ -67,19 +67,21 @@ route.route("/registracny-proces")
       res.render("authentication/multistep_registration",{internalData:internalData,success:false})
     })
     .post(middleware.isLoggedIn,(req,res)=>{
-      let role = req.body.role;
+      const role = req.body.role;
       User.findOneAndUpdate({password:req.user.password},  
         req.body,((err,data)=>{
          if(err) throw err;
          else{ 
-          const link = process.env.DOMAIN + "/potvrdenie?token=";
-          const content = "<p>Prosím potvrďte kliknutím na tento link vytvorenie účtu</p>";
-          const userId = data._id;
-          const email = data.email;
-          const subject = "Vítajte na EduYouth";
-          // Include confirmation_email file
-          send_email(userId,link,content,email,subject);
-            res.render("authentication/multistep_registration",{internalData:internalData,success:true,role:role})
+          // const link = process.env.DOMAIN + "/potvrdenie?token=";
+          // const content = "<p>Prosím potvrďte kliknutím na tento link vytvorenie účtu</p>";
+          // const userId = data._id;
+          // const email = data.email;
+          // const subject = "Vítajte na EduYouth";
+          // // Include confirmation_email file
+          // send_email(userId,link,content,email,subject);
+          // res.render("authentication/multistep_registration",{internalData:internalData,success:true,role:role})
+            req.flash("success","Váš účet bol vytvorený")
+            res.redirect("/profil")
           }
         })
       ) 
@@ -151,7 +153,7 @@ route.route("/strata-hesla")
       const email = data.email;
       const subject = "Zmena hesla";
       send_email(userId,link,content,email,subject)
-        req.flash("success","Email bol poslaný");
+        req.flash("success","Email bol poslaný.");
         res.redirect("/strata-hesla");
       }  
       })

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
     role:{type:String},
-    isVerified:{type:Boolean, default:false},
+    isVerified:{type:Boolean, default:true},
     subject:{type:Array},
     lecturing:{type:Array},
     city:{type:Array},
